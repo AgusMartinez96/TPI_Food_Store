@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app.core.security import create_access_token, hash_password, verify_password
 from app.modules.usuarios.models import Usuario
-from app.modules.usuarios.schemas import MAX_PASSWORD, UserCreate, UserPublic
+from app.modules.usuarios.schemas import MAX_PASSWORD_BYTES, UserCreate, UserPublic
 from app.modules.usuarios.service import UsuarioDuplicado
 from app.modules.usuarios.unit_of_work import UsuarioUnitOfWork
 
@@ -41,7 +41,8 @@ class AuthService:
         with self.uow as uow:
             usuario = uow.usuarios.get_by_username(username)
             hash_a_verificar = usuario.hashed_password if usuario is not None else _HASH_FALSO
-            clave_valida = len(password) <= MAX_PASSWORD and verify_password(password, hash_a_verificar)
+            # una clave de más de 72 bytes nunca pudo registrarse: es incorrecta (y evita el truncado de bcrypt)
+            clave_valida = len(password.encode("utf-8")) <= MAX_PASSWORD_BYTES and verify_password(password, hash_a_verificar)
             if usuario is None or not clave_valida:
                 raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Usuario o contraseña incorrectos")
             if usuario.disabled:

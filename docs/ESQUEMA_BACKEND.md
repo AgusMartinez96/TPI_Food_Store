@@ -172,7 +172,7 @@ Orden de chequeos en `cancelar`: 404 → 403 → 400.
 
 | Schema | Campos | Validaciones |
 |---|---|---|
-| `UserCreate` | `username`, `full_name`, `email`, `password` | `password` mín. 8; `email` válido |
+| `UserCreate` | `username`, `full_name`, `email`, `password` | `password` mín. 8 caracteres y máx. 72 **bytes** en UTF-8 (límite de bcrypt); `email` válido |
 | `UserPublic` | `id`, `username`, `full_name`, `email`, `role`, `disabled`, `created_at` | nunca `hashed_password` |
 | `CategoriaCreate` / `CategoriaUpdate` / `CategoriaRead` | `nombre`, `descripcion` (+ `id`, `activo` en Read) | `nombre` 2 a 100; Update: todos opcionales |
 | `ProductoCreate` / `ProductoUpdate` / `ProductoRead` | `nombre`, `descripcion`, `precio_base`, `imagen_url`, `stock`, `disponible`, `categoria_id` (+ `id`, `activo`, `categoria: CategoriaRead` en Read) | `precio_base ≥ 0`, `stock ≥ 0`; Update: todos opcionales |

@@ -74,7 +74,7 @@ SQLModel resuelve los `Relationship("Clase")` por nombre al configurar los mappe
 
 ## 3. Autenticación y autorización
 
-- **Contraseñas**: bcrypt vía Passlib (`hash_password`, `verify_password`).
+- **Contraseñas**: bcrypt vía Passlib (`hash_password`, `verify_password`). bcrypt solo usa los primeros **72 bytes**; con `bcrypt==4.0.1` el resto se descarta en silencio (dos claves que difieren después del byte 72 serían equivalentes). Por eso el registro rechaza con 422 las contraseñas de más de 72 **bytes** en UTF-8 (se miden bytes, no caracteres: `ñ` = 2, `€` = 3, un emoji = 4) y el login trata una clave de más de 72 bytes como incorrecta (401) sin llamar a bcrypt.
 - **JWT**: `create_access_token(data)` firma `{"sub": str(usuario.id), "exp", "type": "access"}` con `SECRET_KEY` y `ALGORITHM`; `decode_access_token` devuelve el payload o `None` (firma, vencimiento o tipo inválidos). `algorithms=[settings.ALGORITHM]` fijo.
 - **Cookie** `access_token` en `POST /auth/token`: `httponly=True`, `samesite="lax"`, `secure=False` (desarrollo; en producción con HTTPS sería `True`), `path="/"`, `max_age = ACCESS_TOKEN_EXPIRE_MINUTES * 60`. El cuerpo es `{"message": "Login exitoso"}`: **nunca** el token. El logout hace `delete_cookie` con los mismos atributos.
 - **Lectura**: un `OAuth2PasswordBearer` propio lee el token **solo** de la cookie (ignora `Authorization`), con `auto_error=False` para controlar el 401.
