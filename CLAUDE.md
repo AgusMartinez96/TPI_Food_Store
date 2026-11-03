@@ -104,7 +104,7 @@ Usuario admin del seed: `admin` / `Admin1234!`.
 - [x] Fase 5: frontend base y cliente
 - [x] Fase 6: panel de administración
 - [x] Fase 7: integración y calidad; verificado también sobre PostgreSQL 17 (seed x2 y 4 scripts); carrito se vacía solo al cerrar sesión
-- [ ] Fase 8: entrega (README y guion hechos; copia limpia probada; falta zip y tabla final)
+- [x] Fase 8: entrega (README, guion, copia limpia probada, zip en entrega/). **Pendiente del responsable**: video, URL del repo y push
 
 Detalle de tareas y trazabilidad con la rúbrica: [docs/PLAN_IMPLEMENTACION.md](docs/PLAN_IMPLEMENTACION.md).
 
@@ -122,3 +122,13 @@ Detalle de tareas y trazabilidad con la rúbrica: [docs/PLAN_IMPLEMENTACION.md](
 - Código, comentarios breves, mensajes de la API y de la UI: español rioplatense (vos). Identificadores con los nombres exactos de la consigna.
 - Mensajes de error de la API siempre como `{"detail": ...}` (texto en 400/401/403/404/409; lista en 422).
 - Fechas: se guardan en UTC sin zona; los schemas de lectura las devuelven como UTC explícito con `Z` (`UserPublic.created_at`, `PedidoRead.created_at/updated_at`). `pedidos_hoy` desde la medianoche de Argentina (UTC-3). Ver TRD §8.
+
+## Entrega (zip)
+
+El zip vive en `entrega/Martinez_Agustin_TPI_Food_Store.zip` (carpeta y zips ignorados por git). Después de pegar la URL del repositorio y el link del video en el `README.md` y **commitear**, se regenera con exactamente los archivos versionados (sin `node_modules`, `venv`, `.env`, `.verify` ni `.git`):
+
+```powershell
+git archive --format=zip --prefix=TPI_Food_Store/ -o entrega/Martinez_Agustin_TPI_Food_Store.zip HEAD
+```
+
+Pendiente del responsable (no lo puede hacer Claude): grabar y subir el video (CE-07), crear el repositorio público y hacer el push (CE-01), y pegar ambos links en el `README.md`.
