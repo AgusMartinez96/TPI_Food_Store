@@ -134,7 +134,7 @@ Cada excepción lleva un mensaje en español que el Router pasa como `detail`. N
 
 ## 8. Fechas
 
-`created_at` y `updated_at` se guardan como `datetime` **UTC naive** (`datetime.now(timezone.utc).replace(tzinfo=None)`), igual en SQLite y PostgreSQL. El JSON las serializa sin sufijo de zona. El frontend, en un único helper de formato, agrega `Z` cuando falta antes de `new Date(...)`, así se muestran en hora local del navegador. `pedidos_hoy` cuenta `created_at >= medianoche UTC actual` (supuesto S1).
+`created_at` y `updated_at` se guardan como `datetime` **UTC naive** (`datetime.now(timezone.utc).replace(tzinfo=None)`), igual en SQLite y PostgreSQL. El JSON las serializa sin sufijo de zona. El frontend, en un único helper de formato, agrega `Z` cuando falta antes de `new Date(...)`, así se muestran en hora local del navegador. `pedidos_hoy` cuenta `created_at >= medianoche de Argentina` (supuesto S1): `ARG = timezone(timedelta(hours=-3))`; `inicio = datetime.now(ARG).replace(hour=0, minute=0, second=0, microsecond=0)`; se pasa a UTC (`inicio.astimezone(timezone.utc).replace(tzinfo=None)`) para comparar con la columna. Sin `zoneinfo` ni dependencias nuevas.
 
 ## 9. Frontend
 

@@ -184,7 +184,7 @@ Orden de chequeos en `cancelar`: 404 → 403 → 400.
 | `PedidoRead` | `id`, `usuario_id`, `estado`, `forma_pago`, `direccion_entrega`, `notas`, `total`, `created_at`, `updated_at`, `items: list[DetallePedidoRead]` | — |
 | `PedidosPaginados` | `total`, `items: list[PedidoRead]` | — |
 | `CambioEstado` | `estado` | uno de los cuatro estados |
-| `ResumenPedidos` | `pendientes`, `en_preparacion`, `entregados`, `cancelados`, `pedidos_hoy`, `ingresos_entregados` | conteos con `func.count`; ingresos = suma de `total` de los `ENTREGADO` (0 si no hay) |
+| `ResumenPedidos` | `pendientes`, `en_preparacion`, `entregados`, `cancelados`, `pedidos_hoy`, `ingresos_entregados` | conteos con `func.count`; `pedidos_hoy` desde la medianoche de Argentina (UTC-3, S1); ingresos = suma de `total` de los `ENTREGADO` (0 si no hay) |
 
 Los schemas de lectura se arman con `Modelo.model_validate(objeto)` **dentro** del bloque del UoW. Nunca se devuelve un modelo de tabla.
 

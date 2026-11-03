@@ -107,7 +107,7 @@ No contradicen la consigna ni las decisiones cerradas; son huecos que la consign
 
 | # | Hueco | Resolución propuesta |
 |---|---|---|
-| S1 | "pedidos_hoy": ¿qué es "hoy"? | Pedidos con `created_at` dentro del día calendario **UTC** actual (las fechas se guardan en UTC). |
+| S1 | "pedidos_hoy": ¿qué es "hoy"? | Las fechas se guardan en UTC, pero "hoy" se calcula desde la **medianoche de Argentina (UTC-3)**: `timezone(timedelta(hours=-3))`, sin dependencias nuevas. Esa medianoche se convierte a UTC naive para comparar con `created_at`. |
 | S2 | `PATCH /productos/{id}/stock`: ¿ambos campos obligatorios? | Ambos opcionales (`exclude_unset`); se aplica lo enviado. `stock ≥ 0`. Cuerpo vacío = sin cambios (200). |
 | S3 | El panel "pide `limit=100`" pero `GET /categorias` no pagina. | Categorías: lista completa sin parámetros. `limit=100` aplica a productos y pedidos. El panel muestra hasta 100 registros por lista. |
 | S4 | ¿Dónde persiste `authStore` su `usuario`? | `sessionStorage` (solo el objeto usuario; el token nunca se guarda). `checkSession` revalida al montar. |
