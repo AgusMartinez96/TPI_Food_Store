@@ -101,7 +101,7 @@ Usuario admin del seed: `admin` / `Admin1234!`.
 - [x] Fase 2: auth y usuarios
 - [x] Fase 3: catálogo
 - [x] Fase 4: pedidos (+ revisiones ECC), aprobada; contraseña máx. 72 bytes; concurrencia = limitación documentada (TRD §6)
-- [ ] Fase 5: frontend base y cliente
+- [x] Fase 5: frontend base y cliente
 - [ ] Fase 6: panel de administración
 - [ ] Fase 7: integración y calidad — **frena para pasar a PostgreSQL**
 - [ ] Fase 8: entrega (README, guion de video, zip)

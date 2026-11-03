@@ -187,6 +187,6 @@ sequenceDiagram
     N->>St: logout()
     St->>R: POST /auth/logout
     R-->>St: 200 + borra la cookie (mismos atributos)
-    St->>St: usuario = null; se vacía la caché de TanStack Query
+    St->>St: usuario = null; se descartan las consultas propias (pedidos y usuarios) de TanStack Query
     N->>N: navigate("/login")
 ```

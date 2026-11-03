@@ -140,13 +140,13 @@ Cada excepción lleva un mensaje en español que el Router pasa como `detail`. N
 
 - **Estado del servidor**: TanStack Query. Un `queryClient` único (`shared/api/queryClient.ts`) con `retry: 1`, `refetchOnWindowFocus: false`. `queryKey` descriptivas: `['productos', filtros]`, `['categorias']`, `['pedidos', filtros]`, `['pedidos', 'resumen']`, `['usuarios']`. Mutaciones con `invalidateQueries` en `onSuccess`. Crear o cancelar pedido invalida también `['productos']`.
 - **Estado del cliente**: Zustand con `persist`. `authStore` (partialize → solo `usuario`; `cargando` arranca en `true`); `cartStore` (ítems persistidos en `localStorage`; `total` calculado).
-- **Cliente HTTP**: una instancia Axios (`withCredentials: true`, `baseURL = VITE_API_URL`). Interceptor de respuesta: 401 fuera de `/auth/token` y `/auth/me`, o 400 con detail `"Cuenta de usuario desactivada"` → `authStore` se limpia (y se vacía la caché de Query). `ProtectedRoute` redirige a `/login` al quedar sin usuario. El interceptor no navega. (Dependencia circular `authStore` ↔ `axiosInstance`: es segura porque ambos solo se usan dentro de funciones, no al evaluar el módulo.)
+- **Cliente HTTP**: una instancia Axios (`withCredentials: true`, `baseURL = VITE_API_URL`). Interceptor de respuesta: 401 fuera de `/auth/token` y `/auth/me`, o 400 con detail `"Cuenta de usuario desactivada"` → `authStore` se limpia y se descartan las consultas propias (`removeQueries` de pedidos y usuarios; NO `queryClient.clear()`, que borra también las consultas públicas del catálogo en vuelo y deja la pantalla cargando para siempre). `ProtectedRoute` redirige a `/login` al quedar sin usuario. El interceptor no navega. (Dependencia circular `authStore` ↔ `axiosInstance`: es segura porque ambos solo se usan dentro de funciones, no al evaluar el módulo.)
 - **`handleApiError(error: unknown): string`**: `detail` string → tal cual; `detail` lista (422) → mensajes unidos; error de red → mensaje genérico; resto → mensaje por defecto.
 - **Sesión**: `App.tsx` llama `checkSession` en el **único** `useEffect` con efecto de datos. Mientras `cargando` es `true`, `ProtectedRoute` muestra un indicador.
 - **Formularios**: TanStack Form con validación de campo (`validators`), sin librería de esquemas extra.
 - **Tablas**: TanStack Table con `getCoreRowModel` + `getPaginationRowModel` (paginación en el cliente sobre `limit=100`).
 - **TypeScript**: `strict: true`, sin `any`; los `types/` espejan los schemas del backend con los mismos nombres de campo. Verificación: `pnpm build` (que corre `tsc -b`) y `grep -rnw any frontend/src`.
-- **Datos fuera de `useEffect`**: todo `useQuery`/`useMutation`. Verificación: `grep -rn "useEffect" frontend/src` solo debe mostrar `App.tsx`; `grep -rn "fetch(" frontend/src` sin resultados.
+- **Datos fuera de `useEffect`**: todo `useQuery`/`useMutation`. Verificación: `grep -rn "useEffect" frontend/src` solo debe mostrar `App.tsx`; `grep -rnE "(^|[^A-Za-z_.])fetch(" frontend/src` sin resultados (el patrón excluye `refetch(`).
 
 ## 10. Verificación y herramientas de revisión
 

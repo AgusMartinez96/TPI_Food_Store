@@ -47,15 +47,15 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - **Frena: mostrar resultado.**
 
 ### Fase 5 — Frontend base y cliente
-- [ ] T5.1 Scaffold Vite + React + TS en `frontend/` con versiones de la consigna fijadas (`pnpm view`); `strict: true`; Tailwind 4 con `@tailwindcss/vite`; `frontend/.env.example`; `vite-env.d.ts`.
-- [ ] T5.2 `shared/api`: `axiosInstance` (`withCredentials`, interceptor 401 y 400-desactivada), `handleApiError` (texto y lista), `queryClient`.
-- [ ] T5.3 `shared/ui`, `shared/components`, `shared/layout`.
-- [ ] T5.4 `store/authStore` (persist + partialize; `cargando` true; `checkSession`) y `store/cartStore` (persist).
-- [ ] T5.5 `routes/AppRouter` y `ProtectedRoute` (por rol; indicador mientras `cargando`); `App.tsx` con `checkSession` (único `useEffect`).
-- [ ] T5.6 `features/auth`: LoginPage, RegisterPage (TanStack Form), UnauthorizedPage.
-- [ ] T5.7 `features/productos` (cliente): CatalogoPage, ProductoCard (botón deshabilitado, imagen de reemplazo), búsqueda, filtro por categoría, paginación en el servidor, skeleton, estado vacío.
-- [ ] T5.8 `features/pedidos` (cliente): CarritoPage, CheckoutPage (TanStack Form, `POST /pedidos`, invalida pedidos y productos), MisPedidosPage (detalle, cancelar en `PENDIENTE`, filtro por `usuario_id`).
-- [ ] T5.9 **Verificar**: `pnpm build` sin errores.
+- [x] T5.1 Scaffold Vite + React + TS en `frontend/` con versiones de la consigna fijadas (`pnpm view`); `strict: true`; Tailwind 4 con `@tailwindcss/vite`; `frontend/.env.example`; `vite-env.d.ts`.
+- [x] T5.2 `shared/api`: `axiosInstance` (`withCredentials`, interceptor 401 y 400-desactivada), `handleApiError` (texto y lista), `queryClient`.
+- [x] T5.3 `shared/ui`, `shared/components`, `shared/layout`.
+- [x] T5.4 `store/authStore` (persist + partialize; `cargando` true; `checkSession`) y `store/cartStore` (persist).
+- [x] T5.5 `routes/AppRouter` y `ProtectedRoute` (por rol; indicador mientras `cargando`); `App.tsx` con `checkSession` (único `useEffect`).
+- [x] T5.6 `features/auth`: LoginPage, RegisterPage (TanStack Form), UnauthorizedPage.
+- [x] T5.7 `features/productos` (cliente): CatalogoPage, ProductoCard (botón deshabilitado, imagen de reemplazo), búsqueda, filtro por categoría, paginación en el servidor, skeleton, estado vacío.
+- [x] T5.8 `features/pedidos` (cliente): CarritoPage, CheckoutPage (TanStack Form, `POST /pedidos`, invalida pedidos y productos), MisPedidosPage (detalle, cancelar en `PENDIENTE`, filtro por `usuario_id`).
+- [x] T5.9 **Verificar**: `pnpm build` sin errores.
 
 ### Fase 6 — Panel de administración
 - [ ] T6.1 AdminResumenPage (tarjetas).
