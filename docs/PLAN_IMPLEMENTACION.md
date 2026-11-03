@@ -26,11 +26,11 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - [x] T1.10 **Verificar**: instalación limpia; seed ×2 sin duplicar; `uvicorn` levanta; `/docs` y `/redoc` responden.
 
 ### Fase 2 — Auth y usuarios
-- [ ] T2.1 `usuarios`: schemas (`UserCreate`, `UserPublic`), repository (`get_by_username`, `get_by_email`), unit_of_work, service (`UsuarioNoEncontrado`, `UsuarioDuplicado`), router.
-- [ ] T2.2 `core/deps.py`: `get_current_user` (cookie), `get_current_active_user`, `require_role`.
-- [ ] T2.3 `auth`: `POST /auth/register` (201, 409), `POST /auth/token` (cookie HttpOnly; 401 → 400), `POST /auth/logout`, `GET /auth/me`.
-- [ ] T2.4 `/admin/usuarios`: listado, `{id}/activar`, `{id}/desactivar` (idempotentes; 404; 400 autodesactivación).
-- [ ] T2.5 **Verificar** con script: registro 201, 409 por `username` y por `email`, 401, 400 desactivada (login y sesión), 403 de `user` en `/admin/*`, cookie con `HttpOnly`/`SameSite=Lax`/`Max-Age`, cuerpo sin token, `/me`, logout borra cookie, activar/desactivar ×2, autodesactivación 400.
+- [x] T2.1 `usuarios`: schemas (`UserCreate`, `UserPublic`), repository (`get_by_username`, `get_by_email`), unit_of_work, service (`UsuarioNoEncontrado`, `UsuarioDuplicado`), router.
+- [x] T2.2 `core/deps.py`: `get_current_user` (cookie), `get_current_active_user`, `require_role`.
+- [x] T2.3 `auth`: `POST /auth/register` (201, 409), `POST /auth/token` (cookie HttpOnly; 401 → 400), `POST /auth/logout`, `GET /auth/me`.
+- [x] T2.4 `/admin/usuarios`: listado, `{id}/activar`, `{id}/desactivar` (idempotentes; 404; 400 autodesactivación).
+- [x] T2.5 **Verificar** con script: registro 201, 409 por `username` y por `email`, 401, 400 desactivada (login y sesión), 403 de `user` en `/admin/*`, cookie con `HttpOnly`/`SameSite=Lax`/`Max-Age`, cuerpo sin token, `/me`, logout borra cookie, activar/desactivar ×2, autodesactivación 400.
 
 ### Fase 3 — Catálogo
 - [ ] T3.1 `categorias`: schemas, repository (`get_by_nombre`), UoW, service (`CategoriaNoEncontrada`, `NombreDuplicado`), router (`GET/POST /categorias`, `GET/PUT/DELETE /categorias/{id}`).

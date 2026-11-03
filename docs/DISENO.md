@@ -99,7 +99,7 @@ En celular, la barra se colapsa en un menú tipo hamburguesa. El panel muestra s
 - Tailwind 4 vía `@tailwindcss/vite`; `index.css` solo con `@import "tailwindcss";`.
 - Paleta sobria: neutros (slate/zinc) + un acento cálido (naranja/ámbar) para la acción principal; `BadgeEstado` y botones de peligro usan colores semánticos. Contraste AA en texto.
 - Tipografía del sistema; tamaños base legibles (16 px); botones y campos con área táctil ≥ 40 px.
-- Formato de moneda con `Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" })`; fechas con `Intl.DateTimeFormat("es-AR")` tras el ajuste UTC del helper.
+- Formato de moneda con `Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" })`; fechas con `Intl.DateTimeFormat("es-AR")` (la API ya las manda en UTC con `Z`).
 - Sin librerías de UI ni de íconos extra: íconos con SVG inline o emoji.
 
 ## 7. Estados y mensajes (todas las listas)

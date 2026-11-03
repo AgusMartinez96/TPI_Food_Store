@@ -50,6 +50,7 @@ General
 - Commits locales, **sin** `Co-Authored-By`. Nunca push ni crear el repo remoto sin permiso.
 - Nunca pedir ni escribir la contraseña de PostgreSQL en un archivo versionado. `backend/.env` no se versiona.
 - No declarar nada como funcionando sin mostrar la evidencia del comando o script ejecutado.
+- **Procesos**: nunca usar `taskkill` por nombre de imagen (p. ej. `python.exe`). Cortar únicamente procesos que inicié yo en esta sesión, identificados por PID (confirmar la línea de comandos antes de `Stop-Process -Id`).
 
 ## NO arrastrar del TP8/TP9
 
@@ -97,7 +98,7 @@ Usuario admin del seed: `admin` / `Admin1234!`.
 
 - [x] Fase 0: documentación (aprobada; S1 ajustado: `pedidos_hoy` desde medianoche UTC-3)
 - [x] Fase 1: backend base
-- [ ] Fase 2: auth y usuarios
+- [x] Fase 2: auth y usuarios
 - [ ] Fase 3: catálogo
 - [ ] Fase 4: pedidos (+ revisiones ECC) — **frena para mostrar resultado**
 - [ ] Fase 5: frontend base y cliente
@@ -120,4 +121,4 @@ Detalle de tareas y trazabilidad con la rúbrica: [docs/PLAN_IMPLEMENTACION.md](
 
 - Código, comentarios breves, mensajes de la API y de la UI: español rioplatense (vos). Identificadores con los nombres exactos de la consigna.
 - Mensajes de error de la API siempre como `{"detail": ...}` (texto en 400/401/403/404/409; lista en 422).
-- Fechas: se guardan en UTC sin zona; el frontend las interpreta como UTC (ver TRD §8).
+- Fechas: se guardan en UTC sin zona; los schemas de lectura las devuelven como UTC explícito con `Z` (`UserPublic.created_at`, `PedidoRead.created_at/updated_at`). `pedidos_hoy` desde la medianoche de Argentina (UTC-3). Ver TRD §8.
