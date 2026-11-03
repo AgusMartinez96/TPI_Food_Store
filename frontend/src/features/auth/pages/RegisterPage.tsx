@@ -22,7 +22,12 @@ export function RegisterPage() {
   const registrar = useMutation({
     mutationFn: async (datos: UserCreate) => {
       await register(datos)
-      await login(datos.username, datos.password)
+      try {
+        await login(datos.username, datos.password)
+      } catch {
+        // La cuenta ya existe: reintentar el registro daría 409 y confundiría
+        throw new Error('Tu cuenta se creó, pero no pudimos iniciar la sesión. Ingresá desde la pantalla "Ingresar".')
+      }
     },
   })
 

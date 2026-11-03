@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
-import type { ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef, PaginationState } from '@tanstack/react-table'
 import { Paginacion } from './Paginacion'
 
 interface DataTableProps<T extends { id: number }> {
@@ -13,13 +14,21 @@ interface DataTableProps<T extends { id: number }> {
  * y la paginación se hace acá, del lado del cliente.
  */
 export function DataTable<T extends { id: number }>({ datos, columnas, porPagina = 10 }: DataTableProps<T>) {
+  // La página se maneja acá (no con el reinicio automático de TanStack Table): al cambiar el estado de un
+  // pedido la lista se refresca y el admin no tiene que volver a la página donde estaba.
+  const [paginacion, setPaginacion] = useState<PaginationState>({ pageIndex: 0, pageSize: porPagina })
+  const totalPaginas = Math.max(Math.ceil(datos.length / porPagina), 1)
+  const pageIndex = Math.min(paginacion.pageIndex, totalPaginas - 1) // si se borra el último de la última página
+
   const tabla = useReactTable({
     data: datos,
     columns: columnas,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getRowId: (fila) => String(fila.id),
-    initialState: { pagination: { pageSize: porPagina } },
+    autoResetPageIndex: false,
+    state: { pagination: { pageIndex, pageSize: porPagina } },
+    onPaginationChange: setPaginacion,
   })
 
   return (
@@ -51,11 +60,7 @@ export function DataTable<T extends { id: number }>({ datos, columnas, porPagina
         </table>
       </div>
       <p className="mt-2 text-xs text-stone-500">{datos.length} registros</p>
-      <Paginacion
-        pagina={tabla.getState().pagination.pageIndex}
-        totalPaginas={tabla.getPageCount()}
-        onCambiar={(pagina) => tabla.setPageIndex(pagina)}
-      />
+      <Paginacion pagina={pageIndex} totalPaginas={totalPaginas} onCambiar={(pagina) => tabla.setPageIndex(pagina)} />
     </div>
   )
 }

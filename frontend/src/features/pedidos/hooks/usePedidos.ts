@@ -18,7 +18,11 @@ export function useResumenPedidos() {
   return useQuery({ queryKey: RESUMEN_KEY, queryFn: obtenerResumen })
 }
 
-/** Crear, cancelar o cambiar el estado de un pedido puede cambiar el stock: se invalidan pedidos y productos. */
+/**
+ * Crear, cancelar o cambiar el estado de un pedido puede cambiar el stock: se invalidan pedidos y productos.
+ * Se usa con onSettled (también ante un error): un 400 por "stock insuficiente" significa que el catálogo en
+ * pantalla quedó desactualizado, y hay que refrescarlo igual.
+ */
 function useInvalidarPedidosYProductos() {
   const queryClient = useQueryClient()
   return async () => {
@@ -31,18 +35,18 @@ function useInvalidarPedidosYProductos() {
 
 export function useCrearPedido() {
   const invalidar = useInvalidarPedidosYProductos()
-  return useMutation({ mutationFn: crearPedido, onSuccess: invalidar })
+  return useMutation({ mutationFn: crearPedido, onSettled: invalidar })
 }
 
 export function useCancelarPedido() {
   const invalidar = useInvalidarPedidosYProductos()
-  return useMutation({ mutationFn: (id: number) => cancelarPedido(id), onSuccess: invalidar })
+  return useMutation({ mutationFn: (id: number) => cancelarPedido(id), onSettled: invalidar })
 }
 
 export function useCambiarEstadoPedido() {
   const invalidar = useInvalidarPedidosYProductos()
   return useMutation({
     mutationFn: ({ id, estado }: { id: number; estado: EstadoPedido }) => cambiarEstado(id, estado),
-    onSuccess: invalidar,
+    onSettled: invalidar,
   })
 }

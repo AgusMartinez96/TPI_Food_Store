@@ -19,6 +19,14 @@ export function AdminUsuariosPage() {
   const desactivar = useDesactivarUsuario()
   const ocupado = activar.isPending || desactivar.isPending
 
+  // Se limpian los dos errores antes de cada acción: el aviso siempre es del último intento
+  function ejecutar(accion: 'activar' | 'desactivar', id: number) {
+    activar.reset()
+    desactivar.reset()
+    if (accion === 'activar') activar.mutate(id)
+    else desactivar.mutate(id)
+  }
+
   const columnas = useMemo<ColumnDef<Usuario>[]>(
     () => [
       { id: 'username', header: 'Usuario', cell: ({ row }) => <span className="font-medium">{row.original.username}</span> },
@@ -47,7 +55,7 @@ export function AdminUsuariosPage() {
           const u = row.original
           if (u.disabled) {
             return (
-              <Button variante="secondary" disabled={ocupado} onClick={() => activar.mutate(u.id)}>
+              <Button variante="secondary" disabled={ocupado} onClick={() => ejecutar('activar', u.id)}>
                 Activar
               </Button>
             )
@@ -55,14 +63,15 @@ export function AdminUsuariosPage() {
           // Un admin no puede desactivarse a sí mismo: en su propia fila no hay botón Desactivar
           if (u.id === yo?.id) return <span className="text-xs text-stone-500">Es tu cuenta</span>
           return (
-            <Button variante="danger" disabled={ocupado} onClick={() => desactivar.mutate(u.id)}>
+            <Button variante="danger" disabled={ocupado} onClick={() => ejecutar('desactivar', u.id)}>
               Desactivar
             </Button>
           )
         },
       },
     ],
-    [yo?.id, ocupado, activar, desactivar],
+    // ejecutar solo usa mutate/reset de las mutaciones, que son estables; lo que cambia es `ocupado` y quién es `yo`
+    [yo?.id, ocupado],
   )
 
   return (

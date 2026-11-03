@@ -89,7 +89,8 @@ export function CatalogoPage() {
           <>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {data.items.map((p) => (
-                <ProductoCard key={p.id} producto={p} />
+                // la key incluye la imagen: si el admin corrige una URL rota, la tarjeta intenta cargarla de nuevo
+                <ProductoCard key={`${p.id}-${p.imagen_url ?? ''}`} producto={p} />
               ))}
             </div>
             <Paginacion pagina={pagina} totalPaginas={totalPaginas} onCambiar={setPagina} />

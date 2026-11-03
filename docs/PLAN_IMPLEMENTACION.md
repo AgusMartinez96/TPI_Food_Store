@@ -66,9 +66,9 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - [x] T6.6 **Verificar**: `pnpm build`.
 
 ### Fase 7 — Integración y calidad
-- [ ] T7.1 `pnpm build` sin errores; `grep -rnw any frontend/src`; `grep -rn "useEffect" frontend/src` (solo `App.tsx`); `grep -rn "fetch(" frontend/src` (nada).
-- [ ] T7.2 Probar de punta a punta los flujos posibles (backend + frontend levantados, navegador si hay herramienta). Si no se puede operar un navegador: `docs/VERIFICACION_MANUAL.md` con los pasos, marcado **pendiente de prueba manual**.
-- [ ] T7.3 Revisiones ECC del frontend (listar primero; corregir solo lo real y dentro del alcance).
+- [x] T7.1 `pnpm build` sin errores; `grep -rnw any frontend/src`; `grep -rn "useEffect" frontend/src` (solo `App.tsx`); `grep -rn "fetch(" frontend/src` (nada).
+- [x] T7.2 Probar de punta a punta los flujos posibles (backend + frontend levantados, navegador si hay herramienta). Si no se puede operar un navegador: `docs/VERIFICACION_MANUAL.md` con los pasos, marcado **pendiente de prueba manual**.
+- [x] T7.3 Revisiones ECC del frontend (listar primero; corregir solo lo real y dentro del alcance).
 - **Frena: pedir que cambies `DATABASE_URL` en `backend/.env` a PostgreSQL (vos escribís la contraseña).**
 - [ ] T7.4 Repetir seed ×2 y la verificación de pedidos (T4.4) sobre PostgreSQL.
 
