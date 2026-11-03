@@ -117,7 +117,7 @@ El flujo de crear pedido está en [FLUJO.md](FLUJO.md). Puntos técnicos:
 - Todo ocurre dentro de un único `with self.uow as uow:`; el commit lo hace `__exit__`. Si el segundo ítem falla, la excepción sale del bloque, el rollback deshace el `INSERT` del pedido y el descuento del primer ítem.
 - Subtotales y `total` con `round(x, 2)`.
 - Cancelar (por dueño o por admin) recorre `pedido.items`, busca cada producto con `get_by_id` (sin filtrar por activo) y suma `cantidad` al stock, todo antes del commit.
-- **Limitación conocida (documentada, no se resuelve)**: la verificación de stock es "leer, comparar, descontar". Con PostgreSQL y dos pedidos simultáneos sobre el mismo producto podría sobrevender; evitarlo exigiría bloqueo de filas (`FOR UPDATE`), que la consigna no pide.
+- **Limitación conocida (documentada, no se resuelve)**: el stock y el estado se manejan como "leer, comparar, escribir", sin bloqueo de filas. Con PostgreSQL y concurrencia real puede pasar: (a) **sobreventa**, dos pedidos simultáneos del último producto; (b) **restitución doble**, dos cancelaciones simultáneas del mismo pedido (doble clic, o cliente y admin a la vez) que suman dos veces el stock. Evitarlo exigiría `SELECT … FOR UPDATE` o `UPDATE … WHERE estado = 'PENDIENTE'`, que la consigna no pide. En condiciones normales (una petición por vez) y en SQLite, que serializa las escrituras, no ocurre; las verificaciones secuenciales lo confirman (invariante de stock).
 
 ## 7. Errores
 

@@ -1,6 +1,6 @@
 """Fechas: se guardan en UTC sin zona (naive); "hoy" se mide desde la medianoche de Argentina."""
 from datetime import datetime, timedelta, timezone
-from typing import Annotated
+from typing import Annotated, Optional
 
 from pydantic import BeforeValidator
 
@@ -22,7 +22,11 @@ def _marcar_utc(valor: object) -> object:
 UtcDatetime = Annotated[datetime, BeforeValidator(_marcar_utc)]
 
 
-def inicio_hoy_argentina_utc() -> datetime:
-    """Medianoche de Argentina (UTC-3) de hoy, expresada en UTC naive para comparar con created_at."""
-    inicio = datetime.now(ARGENTINA).replace(hour=0, minute=0, second=0, microsecond=0)
+def inicio_hoy_argentina_utc(ahora: Optional[datetime] = None) -> datetime:
+    """Medianoche de Argentina (UTC-3) de hoy, expresada en UTC naive para comparar con created_at.
+
+    `ahora` (con zona) permite fijar el instante de referencia; por defecto es el momento actual.
+    """
+    referencia = ahora if ahora is not None else datetime.now(timezone.utc)
+    inicio = referencia.astimezone(ARGENTINA).replace(hour=0, minute=0, second=0, microsecond=0)
     return inicio.astimezone(timezone.utc).replace(tzinfo=None)

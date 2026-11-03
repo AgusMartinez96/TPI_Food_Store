@@ -38,12 +38,12 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - [x] T3.3 **Verificar** con script: verbos y códigos (201/200/204/404/409), baja lógica (detalle/PUT/PATCH/DELETE → 404; DELETE repetido 404), paginación (`skip`, `limit`, `total`), `search` sin distinguir mayúsculas, filtros `categoria_id` y `disponible`, PATCH de stock, categoría de baja no libera nombre (409) ni oculta productos, 403 a `user`.
 
 ### Fase 4 — Pedidos
-- [ ] T4.1 `pedidos`: schemas, repository (`list_by_usuario`, `count_by_estado`, listado total, hoy, ingresos), `PedidoUnitOfWork` (pedidos + productos).
-- [ ] T4.2 `service`: RN-01 (crear atómico), RN-02 (diccionario de transiciones), RN-03 (restituir stock), RN-04 (permisos), RN-05, RN-06; excepciones de dominio.
-- [ ] T4.3 `router`: `get_pedido_service`; `POST`, `GET`, `GET /resumen` (antes de `/{id}`), `GET /{id}`, `PATCH /{id}/estado`, `PATCH /{id}/cancelar`; traducción de excepciones.
-- [ ] T4.4 **Verificar** con script (mínimo): pedido correcto (total, líneas copiadas, stock descontado); **rollback completo** cuando falla el 2.º ítem (stock del 1.º intacto, sin pedido nuevo); repetido (400), inexistente (404), inactivo (404), no disponible (400), sin stock (400); todas las transiciones válidas e inválidas; restitución de stock al cancelar (dueño y admin, incluso de producto dado de baja); permisos (dueño, ajeno 403, admin ve todo, `cancelar` ajeno por admin 403); `updated_at` cambia; resumen correcto (incluido 0 sin entregados); precios inmutables tras cambiar `precio_base`.
-- [ ] T4.5 **Verificaciones estáticas**: `commit(` solo en `unit_of_work.py`; ningún router importa un UoW; todos los modelos de tabla fuera de `response_model`.
-- [ ] T4.6 Revisiones ECC del backend: **listar primero** lo instalado (no inventar comandos); correr `python-review`, `fastapi-review`, `security-review` y `code-review`; corregir solo problemas reales dentro del alcance (descartar pedidos de suite de pruebas).
+- [x] T4.1 `pedidos`: schemas, repository (`list_by_usuario`, `count_by_estado`, listado total, hoy, ingresos), `PedidoUnitOfWork` (pedidos + productos).
+- [x] T4.2 `service`: RN-01 (crear atómico), RN-02 (diccionario de transiciones), RN-03 (restituir stock), RN-04 (permisos), RN-05, RN-06; excepciones de dominio.
+- [x] T4.3 `router`: `get_pedido_service`; `POST`, `GET`, `GET /resumen` (antes de `/{id}`), `GET /{id}`, `PATCH /{id}/estado`, `PATCH /{id}/cancelar`; traducción de excepciones.
+- [x] T4.4 **Verificar** con script (mínimo): pedido correcto (total, líneas copiadas, stock descontado); **rollback completo** cuando falla el 2.º ítem (stock del 1.º intacto, sin pedido nuevo); repetido (400), inexistente (404), inactivo (404), no disponible (400), sin stock (400); todas las transiciones válidas e inválidas; restitución de stock al cancelar (dueño y admin, incluso de producto dado de baja); permisos (dueño, ajeno 403, admin ve todo, `cancelar` ajeno por admin 403); `updated_at` cambia; resumen correcto (incluido 0 sin entregados); precios inmutables tras cambiar `precio_base`.
+- [x] T4.5 **Verificaciones estáticas**: `commit(` solo en `unit_of_work.py`; ningún router importa un UoW; todos los modelos de tabla fuera de `response_model`.
+- [x] T4.6 Revisiones ECC del backend: **listar primero** lo instalado (no inventar comandos); correr `python-review`, `fastapi-review`, `security-review` y `code-review`; corregir solo problemas reales dentro del alcance (descartar pedidos de suite de pruebas).
 - **Frena: mostrar resultado.**
 
 ### Fase 5 — Frontend base y cliente

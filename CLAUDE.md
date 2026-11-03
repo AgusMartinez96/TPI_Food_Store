@@ -100,7 +100,7 @@ Usuario admin del seed: `admin` / `Admin1234!`.
 - [x] Fase 1: backend base
 - [x] Fase 2: auth y usuarios
 - [x] Fase 3: catálogo
-- [ ] Fase 4: pedidos (+ revisiones ECC) — **frena para mostrar resultado**
+- [x] Fase 4: pedidos (+ revisiones ECC) — **frenada: esperando que se revise el resultado**
 - [ ] Fase 5: frontend base y cliente
 - [ ] Fase 6: panel de administración
 - [ ] Fase 7: integración y calidad — **frena para pasar a PostgreSQL**

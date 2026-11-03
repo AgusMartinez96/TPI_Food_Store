@@ -1,5 +1,6 @@
 from typing import Optional
 
+from pydantic import FiniteFloat
 from sqlmodel import Field, SQLModel
 
 from app.modules.categorias.schemas import CategoriaRead
@@ -8,7 +9,7 @@ from app.modules.categorias.schemas import CategoriaRead
 class ProductoCreate(SQLModel):
     nombre: str = Field(min_length=1)
     descripcion: Optional[str] = None
-    precio_base: float = Field(ge=0)
+    precio_base: FiniteFloat = Field(ge=0)
     imagen_url: Optional[str] = None
     stock: int = Field(default=0, ge=0)
     disponible: bool = True
@@ -18,7 +19,7 @@ class ProductoCreate(SQLModel):
 class ProductoUpdate(SQLModel):
     nombre: Optional[str] = Field(default=None, min_length=1)
     descripcion: Optional[str] = None
-    precio_base: Optional[float] = Field(default=None, ge=0)
+    precio_base: Optional[FiniteFloat] = Field(default=None, ge=0)
     imagen_url: Optional[str] = None
     stock: Optional[int] = Field(default=None, ge=0)
     disponible: Optional[bool] = None

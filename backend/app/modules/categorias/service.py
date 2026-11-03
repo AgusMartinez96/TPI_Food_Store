@@ -1,3 +1,5 @@
+from sqlalchemy.exc import IntegrityError
+
 from app.modules.categorias.models import Categoria
 from app.modules.categorias.schemas import CategoriaCreate, CategoriaRead, CategoriaUpdate
 from app.modules.categorias.unit_of_work import CategoriaUnitOfWork
@@ -27,7 +29,10 @@ class CategoriaService:
         with self.uow as uow:
             if uow.categorias.get_by_nombre(datos.nombre) is not None:
                 raise NombreDuplicado(f"Ya existe una categoría con el nombre '{datos.nombre}'")
-            categoria = uow.categorias.add(Categoria(nombre=datos.nombre, descripcion=datos.descripcion))
+            try:
+                categoria = uow.categorias.add(Categoria(nombre=datos.nombre, descripcion=datos.descripcion))
+            except IntegrityError:  # dos altas simultáneas con el mismo nombre
+                raise NombreDuplicado(f"Ya existe una categoría con el nombre '{datos.nombre}'")
             return CategoriaRead.model_validate(categoria)
 
     def actualizar(self, categoria_id: int, datos: CategoriaUpdate) -> CategoriaRead:
@@ -42,7 +47,10 @@ class CategoriaService:
                     raise NombreDuplicado(f"Ya existe una categoría con el nombre '{nombre}'")
             for campo, valor in cambios.items():
                 setattr(categoria, campo, valor)
-            uow.categorias.add(categoria)
+            try:
+                uow.categorias.add(categoria)
+            except IntegrityError:  # otro admin tomó el nombre entre el chequeo y el guardado
+                raise NombreDuplicado(f"Ya existe una categoría con el nombre '{nombre}'")
             return CategoriaRead.model_validate(categoria)
 
     def eliminar(self, categoria_id: int) -> None:
