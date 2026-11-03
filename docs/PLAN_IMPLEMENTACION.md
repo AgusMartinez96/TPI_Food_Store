@@ -33,9 +33,9 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - [x] T2.5 **Verificar** con script: registro 201, 409 por `username` y por `email`, 401, 400 desactivada (login y sesión), 403 de `user` en `/admin/*`, cookie con `HttpOnly`/`SameSite=Lax`/`Max-Age`, cuerpo sin token, `/me`, logout borra cookie, activar/desactivar ×2, autodesactivación 400.
 
 ### Fase 3 — Catálogo
-- [ ] T3.1 `categorias`: schemas, repository (`get_by_nombre`), UoW, service (`CategoriaNoEncontrada`, `NombreDuplicado`), router (`GET/POST /categorias`, `GET/PUT/DELETE /categorias/{id}`).
-- [ ] T3.2 `productos`: schemas (incl. `ProductoStockUpdate`, `ProductosPaginados`), repository (`search`), UoW (productos + categorias), service, router (incl. `PATCH /{id}/stock`).
-- [ ] T3.3 **Verificar** con script: verbos y códigos (201/200/204/404/409), baja lógica (detalle/PUT/PATCH/DELETE → 404; DELETE repetido 404), paginación (`skip`, `limit`, `total`), `search` sin distinguir mayúsculas, filtros `categoria_id` y `disponible`, PATCH de stock, categoría de baja no libera nombre (409) ni oculta productos, 403 a `user`.
+- [x] T3.1 `categorias`: schemas, repository (`get_by_nombre`), UoW, service (`CategoriaNoEncontrada`, `NombreDuplicado`), router (`GET/POST /categorias`, `GET/PUT/DELETE /categorias/{id}`).
+- [x] T3.2 `productos`: schemas (incl. `ProductoStockUpdate`, `ProductosPaginados`), repository (`search`), UoW (productos + categorias), service, router (incl. `PATCH /{id}/stock`).
+- [x] T3.3 **Verificar** con script: verbos y códigos (201/200/204/404/409), baja lógica (detalle/PUT/PATCH/DELETE → 404; DELETE repetido 404), paginación (`skip`, `limit`, `total`), `search` sin distinguir mayúsculas, filtros `categoria_id` y `disponible`, PATCH de stock, categoría de baja no libera nombre (409) ni oculta productos, 403 a `user`.
 
 ### Fase 4 — Pedidos
 - [ ] T4.1 `pedidos`: schemas, repository (`list_by_usuario`, `count_by_estado`, listado total, hoy, ingresos), `PedidoUnitOfWork` (pedidos + productos).
