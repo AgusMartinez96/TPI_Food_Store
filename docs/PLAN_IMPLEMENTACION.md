@@ -58,12 +58,12 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - [x] T5.9 **Verificar**: `pnpm build` sin errores.
 
 ### Fase 6 — Panel de administración
-- [ ] T6.1 AdminResumenPage (tarjetas).
-- [ ] T6.2 AdminCategoriasPage (TanStack Table + Form; baja lógica).
-- [ ] T6.3 AdminProductosPage (TanStack Table + Form; cambio de stock y disponibilidad).
-- [ ] T6.4 AdminPedidosPage (filtro por estado; avanzar/cancelar según la máquina de estados).
-- [ ] T6.5 AdminUsuariosPage (activar/desactivar; sin Desactivar en la fila propia).
-- [ ] T6.6 **Verificar**: `pnpm build`.
+- [x] T6.1 AdminResumenPage (tarjetas).
+- [x] T6.2 AdminCategoriasPage (TanStack Table + Form; baja lógica).
+- [x] T6.3 AdminProductosPage (TanStack Table + Form; cambio de stock y disponibilidad).
+- [x] T6.4 AdminPedidosPage (filtro por estado; avanzar/cancelar según la máquina de estados).
+- [x] T6.5 AdminUsuariosPage (activar/desactivar; sin Desactivar en la fila propia).
+- [x] T6.6 **Verificar**: `pnpm build`.
 
 ### Fase 7 — Integración y calidad
 - [ ] T7.1 `pnpm build` sin errores; `grep -rnw any frontend/src`; `grep -rn "useEffect" frontend/src` (solo `App.tsx`); `grep -rn "fetch(" frontend/src` (nada).
