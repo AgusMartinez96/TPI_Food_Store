@@ -96,7 +96,7 @@ Usuario admin del seed: `admin` / `Admin1234!`.
 ## Estado actual
 
 - [x] Fase 0: documentación (aprobada; S1 ajustado: `pedidos_hoy` desde medianoche UTC-3)
-- [ ] Fase 1: backend base (en curso)
+- [x] Fase 1: backend base
 - [ ] Fase 2: auth y usuarios
 - [ ] Fase 3: catálogo
 - [ ] Fase 4: pedidos (+ revisiones ECC) — **frena para mostrar resultado**

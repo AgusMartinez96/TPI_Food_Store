@@ -14,16 +14,16 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - **Frena: esperar aprobación.**
 
 ### Fase 1 — Backend base
-- [ ] T1.1 Verificar Python 3.11–3.13; crear `backend/.venv`; `requirements.txt` con versiones exactas.
-- [ ] T1.2 `core/config.py` (Settings, `SECRET_KEY` ≥ 32), `backend/.env.example`, `backend/.env` (SQLite + clave aleatoria).
-- [ ] T1.3 `core/database.py` (`engine`, `create_all_tables`, `session_factory`; SQLite con `check_same_thread` y FKs).
-- [ ] T1.4 `core/security.py` (bcrypt, `create_access_token`, `decode_access_token`).
-- [ ] T1.5 `core/unit_of_work.py` (`__enter__` abre sesión; `__exit__` commit/rollback/close).
-- [ ] T1.6 `core/base_repository.py` (`BaseRepository[T]`: `get_by_id`, `get_all`, `add`, `delete`).
-- [ ] T1.7 `models.py` de usuarios, categorias, productos y pedidos (5 entidades, `Relationship`/`back_populates` con nombres exactos) + `modules/__init__.py` importando los modelos.
-- [ ] T1.8 `app/main.py`: CORS con credenciales, prefijo `/api/v1`, lifespan con `create_all_tables`.
-- [ ] T1.9 `db/seed.py` idempotente (crea tablas; admin; ≥ 3 categorías; ≥ 8 productos con stock).
-- [ ] T1.10 **Verificar**: instalación limpia; seed ×2 sin duplicar; `uvicorn` levanta; `/docs` y `/redoc` responden.
+- [x] T1.1 Verificar Python 3.11–3.13; crear `backend/.venv`; `requirements.txt` con versiones exactas.
+- [x] T1.2 `core/config.py` (Settings, `SECRET_KEY` ≥ 32), `backend/.env.example`, `backend/.env` (SQLite + clave aleatoria).
+- [x] T1.3 `core/database.py` (`engine`, `create_all_tables`, `session_factory`; SQLite con `check_same_thread` y FKs).
+- [x] T1.4 `core/security.py` (bcrypt, `create_access_token`, `decode_access_token`).
+- [x] T1.5 `core/unit_of_work.py` (`__enter__` abre sesión; `__exit__` commit/rollback/close).
+- [x] T1.6 `core/base_repository.py` (`BaseRepository[T]`: `get_by_id`, `get_all`, `add`, `delete`).
+- [x] T1.7 `models.py` de usuarios, categorias, productos y pedidos (5 entidades, `Relationship`/`back_populates` con nombres exactos) + `modules/__init__.py` importando los modelos.
+- [x] T1.8 `app/main.py`: CORS con credenciales, prefijo `/api/v1`, lifespan con `create_all_tables`.
+- [x] T1.9 `db/seed.py` idempotente (crea tablas; admin; ≥ 3 categorías; ≥ 8 productos con stock).
+- [x] T1.10 **Verificar**: instalación limpia; seed ×2 sin duplicar; `uvicorn` levanta; `/docs` y `/redoc` responden.
 
 ### Fase 2 — Auth y usuarios
 - [ ] T2.1 `usuarios`: schemas (`UserCreate`, `UserPublic`), repository (`get_by_username`, `get_by_email`), unit_of_work, service (`UsuarioNoEncontrado`, `UsuarioDuplicado`), router.
