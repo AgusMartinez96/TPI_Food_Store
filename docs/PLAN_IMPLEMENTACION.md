@@ -73,9 +73,9 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - [x] T7.4 Repetir seed ×2 y la verificación de pedidos (T4.4) sobre PostgreSQL.
 
 ### Fase 8 — Entrega
-- [ ] T8.1 `README.md` de la raíz: requisitos, instalación y ejecución de backend y frontend, variables de entorno, usuario `admin` del seed, y lugares marcados para la **URL del repositorio** y el **link del video**. Incluye una sección **"Créditos de las imágenes"** con autor y licencia de las 9 fotos de Wikimedia Commons (las CC BY y CC BY-SA exigen mencionar la autoría; los datos están en los comentarios de `backend/app/db/seed.py`).
-- [ ] T8.2 `docs/GUION_VIDEO.md` (10 a 15 min, según CE-07).
-- [ ] T8.3 Probar el README en **copia limpia** (venv nuevo, `pip install`, seed, `uvicorn`, `pnpm install`, `pnpm build`).
+- [x] T8.1 `README.md` de la raíz: requisitos, instalación y ejecución de backend y frontend, variables de entorno, usuario `admin` del seed, y lugares marcados para la **URL del repositorio** y el **link del video**. Incluye una sección **"Créditos de las imágenes"** con autor y licencia de las 9 fotos de Wikimedia Commons (las CC BY y CC BY-SA exigen mencionar la autoría; los datos están en los comentarios de `backend/app/db/seed.py`).
+- [x] T8.2 `docs/GUION_VIDEO.md` (10 a 15 min, según CE-07).
+- [x] T8.3 Probar el README en **copia limpia** (venv nuevo, `pip install`, seed, `uvicorn`, `pnpm install`, `pnpm build`).
 - [ ] T8.4 Generar `Martinez_Agustin_TPI_Food_Store.zip` (sin `node_modules`, `venv`, `.venv`, `.env`, `.verify`, `.git`, `dist`, `__pycache__`).
 - [ ] T8.5 Tabla final de la rúbrica de 100 puntos: criterio, estado, evidencia y lo que le queda a la persona responsable.
 

@@ -104,7 +104,7 @@ Usuario admin del seed: `admin` / `Admin1234!`.
 - [x] Fase 5: frontend base y cliente
 - [x] Fase 6: panel de administración
 - [x] Fase 7: integración y calidad; verificado también sobre PostgreSQL 17 (seed x2 y 4 scripts); carrito se vacía solo al cerrar sesión
-- [ ] Fase 8: entrega (README, guion de video, zip)
+- [ ] Fase 8: entrega (README y guion hechos; copia limpia probada; falta zip y tabla final)
 
 Detalle de tareas y trazabilidad con la rúbrica: [docs/PLAN_IMPLEMENTACION.md](docs/PLAN_IMPLEMENTACION.md).
 
