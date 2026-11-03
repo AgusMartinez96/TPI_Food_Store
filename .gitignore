@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.db
+
+# Node
+node_modules/
+dist/
+
+# Entorno (los .env.example sí se versionan)
+.env
+.env.*
+!.env.example
+
+# Verificación temporal (scripts descartables) y entrega generada
+.verify/
+*.zip
+
+# Editor / sistema
+.vscode/
+.idea/
+.claude/settings.local.json
+Thumbs.db
