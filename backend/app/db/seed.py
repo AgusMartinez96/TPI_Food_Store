@@ -15,17 +15,41 @@ CATEGORIAS: list[tuple[str, str]] = [
     ("Postres", "Dulces para cerrar la comida"),
 ]
 
-# (categoría, nombre, descripción, precio_base, stock, semilla de imagen)
-PRODUCTOS: list[tuple[str, str, str, float, int, str]] = [
-    ("Hamburguesas", "Hamburguesa clásica", "Carne, lechuga, tomate y cheddar", 8500.0, 25, "hamburguesa-clasica"),
-    ("Hamburguesas", "Hamburguesa doble", "Doble carne, panceta y cheddar", 11200.0, 20, "hamburguesa-doble"),
-    ("Hamburguesas", "Hamburguesa vegetariana", "Medallón de lentejas y vegetales", 9000.0, 15, "hamburguesa-veggie"),
-    ("Pizzas", "Pizza muzzarella", "Salsa de tomate y muzzarella", 9800.0, 30, "pizza-muzzarella"),
-    ("Pizzas", "Pizza napolitana", "Muzzarella, tomate fresco y ajo", 10800.0, 18, "pizza-napolitana"),
-    ("Bebidas", "Gaseosa cola 500 ml", "Botella individual", 2200.0, 60, "gaseosa-cola"),
-    ("Bebidas", "Agua mineral 500 ml", "Sin gas", 1500.0, 80, "agua-mineral"),
-    ("Postres", "Flan casero", "Con dulce de leche y crema", 4200.0, 12, "flan-casero"),
-    ("Postres", "Brownie con helado", "Brownie tibio y bocha de crema", 5600.0, 10, "brownie-helado"),
+# Fotos de Wikimedia Commons (miniaturas de 500 px), verificadas una por una (HTTP 200, image/jpeg).
+# La licencia y el autor van junto a cada URL; las CC BY / CC BY-SA exigen mencionar la autoría (ver README).
+_COMMONS = "https://thumb.wikimedia.org/wikipedia/commons/thumb"
+IMAGENES: dict[str, str] = {
+    # Dominio público · Renee Comet
+    "Hamburguesa clásica": f"{_COMMONS}/4/4d/Cheeseburger.jpg/500px-Cheeseburger.jpg",
+    # CC BY-SA 4.0 · PattayaPatrol
+    "Hamburguesa doble": f"{_COMMONS}/2/2e/DFC_2394_Double_cheeseburger_stacked_with_two_juicy_patties_melted_cheddar_crisp_lettuce_and_tomato_on_a_soft_sesame_bun.jpg/500px-DFC_2394_Double_cheeseburger_stacked_with_two_juicy_patties_melted_cheddar_crisp_lettuce_and_tomato_on_a_soft_sesame_bun.jpg",
+    # CC0 · Andy Li
+    "Hamburguesa vegetariana": f"{_COMMONS}/8/89/Plant-based_Cheeseburger_-_Depot_Cinema_and_Restaurant_2025-03-06.jpg/500px-Plant-based_Cheeseburger_-_Depot_Cinema_and_Restaurant_2025-03-06.jpg",
+    # CC BY-SA 4.0 · Victor Manuel Giordano
+    "Pizza muzzarella": f"{_COMMONS}/2/23/Pizza_with_mozzarella_%28argentine_style%29.jpg/500px-Pizza_with_mozzarella_%28argentine_style%29.jpg",
+    # CC BY-SA 4.0 · Fabryx98
+    "Pizza napolitana": f"{_COMMONS}/4/46/Pizza-napoletana.jpg/500px-Pizza-napoletana.jpg",
+    # Dominio público · Ralf Roletschek
+    "Gaseosa cola 500 ml": f"{_COMMONS}/e/e8/15-09-26-RalfR-WLC-0098_-_Coca-Cola_glass_bottle_%28Germany%29.jpg/500px-15-09-26-RalfR-WLC-0098_-_Coca-Cola_glass_bottle_%28Germany%29.jpg",
+    # CC0 · Jiafei Slay Queen
+    "Agua mineral 500 ml": f"{_COMMONS}/a/ad/Bottle_of_Water.jpg/500px-Bottle_of_Water.jpg",
+    # CC BY-SA 4.0 · Pequeño mar
+    "Flan casero": f"{_COMMONS}/5/5e/Flan_con_dulce_de_leche_y_crema.jpg/500px-Flan_con_dulce_de_leche_y_crema.jpg",
+    # CC BY 2.0 · Ruth Hartnup
+    "Brownie con helado": f"{_COMMONS}/e/ef/Chocolate_brownies_with_vanilla_ice_cream_%2843710445200%29.jpg/500px-Chocolate_brownies_with_vanilla_ice_cream_%2843710445200%29.jpg",
+}
+
+# (categoría, nombre, descripción, precio_base, stock)
+PRODUCTOS: list[tuple[str, str, str, float, int]] = [
+    ("Hamburguesas", "Hamburguesa clásica", "Carne, lechuga, tomate y cheddar", 8500.0, 25),
+    ("Hamburguesas", "Hamburguesa doble", "Doble carne, panceta y cheddar", 11200.0, 20),
+    ("Hamburguesas", "Hamburguesa vegetariana", "Medallón de lentejas y vegetales", 9000.0, 15),
+    ("Pizzas", "Pizza muzzarella", "Salsa de tomate y muzzarella", 9800.0, 30),
+    ("Pizzas", "Pizza napolitana", "Muzzarella, tomate fresco y ajo", 10800.0, 18),
+    ("Bebidas", "Gaseosa cola 500 ml", "Botella individual", 2200.0, 60),
+    ("Bebidas", "Agua mineral 500 ml", "Sin gas", 1500.0, 80),
+    ("Postres", "Flan casero", "Con dulce de leche y crema", 4200.0, 12),
+    ("Postres", "Brownie con helado", "Brownie tibio y bocha de crema", 5600.0, 10),
 ]
 
 
@@ -35,7 +59,7 @@ class SeedUnitOfWork(UnitOfWork):
 
 def run() -> None:
     create_all_tables()
-    creados = {"usuarios": 0, "categorias": 0, "productos": 0}
+    creados = {"usuarios": 0, "categorias": 0, "productos": 0, "imagenes_actualizadas": 0}
     with SeedUnitOfWork() as uow:
         s = uow.session
         if s.exec(select(Usuario).where(Usuario.username == "admin")).first() is None:
@@ -60,8 +84,9 @@ def run() -> None:
                 creados["categorias"] += 1
             por_nombre[nombre] = categoria
 
-        for cat, nombre, descripcion, precio, stock, semilla in PRODUCTOS:
-            if s.exec(select(Producto).where(Producto.nombre == nombre)).first() is None:
+        for cat, nombre, descripcion, precio, stock in PRODUCTOS:
+            producto = s.exec(select(Producto).where(Producto.nombre == nombre)).first()
+            if producto is None:
                 s.add(
                     Producto(
                         categoria_id=por_nombre[cat].id,  # type: ignore[arg-type]
@@ -69,10 +94,15 @@ def run() -> None:
                         descripcion=descripcion,
                         precio_base=precio,
                         stock=stock,
-                        imagen_url=f"https://picsum.photos/seed/{semilla}/400/300",
+                        imagen_url=IMAGENES[nombre],
                     )
                 )
                 creados["productos"] += 1
+            elif producto.imagen_url != IMAGENES[nombre]:
+                # Solo se corrige la foto: stock, precio y demás campos (que el admin pudo editar) no se tocan
+                producto.imagen_url = IMAGENES[nombre]
+                s.add(producto)
+                creados["imagenes_actualizadas"] += 1
     print(f"Seed OK. Creados ahora: {creados}")
 
 

@@ -220,4 +220,4 @@ Idempotente: crea las tablas, y solo inserta lo que falta.
 
 - Usuario `admin` / `Admin1234!`, rol `admin` (email `admin@foodstore.com`, nombre completo "Administrador").
 - Al menos 3 categorías (p. ej. Hamburguesas, Pizzas, Bebidas, Postres).
-- Al menos 8 productos con stock, repartidos entre las categorías, con `imagen_url` de muestra.
+- 9 productos con stock, repartidos entre las categorías, cada uno con la foto que le corresponde (`imagen_url` apunta a una miniatura de 500 px de Wikimedia Commons; licencia y autor están anotados junto a cada URL en `db/seed.py`). Al volver a correr el seed, **solo** se corrige `imagen_url` en los productos que ya existen: no se tocan stock, precio ni otros campos, y no se duplican filas.
