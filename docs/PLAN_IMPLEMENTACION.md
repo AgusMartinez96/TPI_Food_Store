@@ -70,7 +70,7 @@ Convención de verificación: scripts descartables en `.verify/` (fuera de git y
 - [x] T7.2 Probar de punta a punta los flujos posibles (backend + frontend levantados, navegador si hay herramienta). Si no se puede operar un navegador: `docs/VERIFICACION_MANUAL.md` con los pasos, marcado **pendiente de prueba manual**.
 - [x] T7.3 Revisiones ECC del frontend (listar primero; corregir solo lo real y dentro del alcance).
 - **Frena: pedir que cambies `DATABASE_URL` en `backend/.env` a PostgreSQL (vos escribís la contraseña).**
-- [ ] T7.4 Repetir seed ×2 y la verificación de pedidos (T4.4) sobre PostgreSQL.
+- [x] T7.4 Repetir seed ×2 y la verificación de pedidos (T4.4) sobre PostgreSQL.
 
 ### Fase 8 — Entrega
 - [ ] T8.1 `README.md` de la raíz: requisitos, instalación y ejecución de backend y frontend, variables de entorno, usuario `admin` del seed, y lugares marcados para la **URL del repositorio** y el **link del video**. Incluye una sección **"Créditos de las imágenes"** con autor y licencia de las 9 fotos de Wikimedia Commons (las CC BY y CC BY-SA exigen mencionar la autoría; los datos están en los comentarios de `backend/app/db/seed.py`).

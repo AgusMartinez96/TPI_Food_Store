@@ -157,3 +157,18 @@ Cada excepción lleva un mensaje en español que el Router pasa como `detail`. N
 ## 11. Comandos de Windows
 
 Están en [CLAUDE.md](../CLAUDE.md) (sección "Comandos"). Notas para PowerShell: activar el venv con `.venv\Scripts\Activate.ps1` (si la política lo bloquea: `Set-ExecutionPolicy -Scope Process Bypass`); copiar con `Copy-Item`; no hay `&&` en Windows PowerShell 5.1.
+
+## 12. Limitaciones conocidas
+
+Decisiones tomadas con el responsable del TPI: se dejan así a propósito y no se corrigen.
+
+| # | Limitación | Por qué se acepta |
+|---|---|---|
+| L1 | **Concurrencia sin bloqueo de filas** (§6). Con PostgreSQL y peticiones simultáneas puede haber sobreventa de stock o doble restitución al cancelar dos veces a la vez el mismo pedido. | La consigna no pide `FOR UPDATE`. Con una petición por vez no ocurre, y las verificaciones secuenciales lo confirman (invariante de stock). |
+| L2 | **El modal no atrapa el foco.** Declara `aria-modal`, pero con Tab el foco puede salir hacia los elementos que quedan detrás, y al cerrar no vuelve al botón que lo abrió. | Es usable con teclado y evita un `useEffect` más (la regla es que el único `useEffect` sea `checkSession`). Sí se corrigió que el foco saltara al diálogo en cada re-render. |
+| L3 | **"Mis pedidos" pide hasta 100 pedidos** (`limit=100`) y filtra por `usuario_id` en el cliente. Para un admin, `GET /pedidos` devuelve los de todos: con más de 100 pedidos en total podría ver menos de los suyos. Para un `user` no pasa (el backend ya filtra). | Decisión cerrada del frontend (el panel usa `limit=100`) y supuesto S8 del PRD. |
+| L4 | **Carrera entre `checkSession` y un login rápido.** Si `GET /auth/me` del arranque tarda mucho (backend frío, hasta el timeout de 10 s) y la persona inicia sesión antes de que responda, ese 401 tardío puede cerrarle la sesión recién abierta. | Es improbable y se resuelve volviendo a ingresar. |
+| L5 | **`Infinity` / `NaN` en el JSON de un producto.** La validación (`FiniteFloat`) lo rechaza y no se guarda nada, pero FastAPI no logra serializar su propio 422 con `inf` y responde 500. | Evitarlo exigiría un handler global de `RequestValidationError`, que la consigna no quiere; ningún cliente estándar envía ese literal (`JSON.stringify(Infinity)` da `null`). |
+| L6 | **`search` sin distinguir mayúsculas depende del motor.** En PostgreSQL (verificado en PostgreSQL 17, base UTF-8) pliega también tildes y `ñ` («ÑOQUIS», «CAFÉ», «ÁRBOL», «CRÈME BRÛLÉE» encuentran sus nombres en mayúscula y minúscula); en SQLite solo ASCII (ni encuentra «Ñoquis» buscando «ñoquis»). | SQLite es solo para desarrollo; el objetivo es PostgreSQL. |
+
+**Carrito y sesión** (decisión de producto, no es una limitación): el carrito se guarda en `localStorage` y se **vacía solo cuando la persona cierra sesión a propósito** (`authStore.logout`). No se vacía si la sesión vence, ante un 401 ni al recargar la página.

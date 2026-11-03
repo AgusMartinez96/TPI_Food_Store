@@ -6,10 +6,19 @@ from sqlmodel import Session, SQLModel, create_engine
 
 from app.core.config import settings
 
+def _url_con_driver(url: str) -> str:
+    """Con SQLAlchemy 2.1, `postgresql://` usa el driver nuevo `psycopg` (v3). El stack de este TPI es
+    psycopg2-binary, así que se completa el driver y la URL de la consigna (`postgresql://usuario:clave@...`)
+    sigue funcionando tal cual en el .env."""
+    if url.startswith("postgresql://"):
+        return "postgresql+psycopg2://" + url[len("postgresql://") :]
+    return url
+
+
 _es_sqlite = settings.DATABASE_URL.startswith("sqlite")
 _connect_args: dict[str, Any] = {"check_same_thread": False} if _es_sqlite else {}
 
-engine = create_engine(settings.DATABASE_URL, connect_args=_connect_args)
+engine = create_engine(_url_con_driver(settings.DATABASE_URL), connect_args=_connect_args)
 
 if _es_sqlite:
 

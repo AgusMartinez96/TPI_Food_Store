@@ -4,6 +4,7 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { getMe, login as loginRequest, logout as logoutRequest } from '../features/auth/api/auth'
 import type { Usuario } from '../features/auth/types/auth'
 import { queryClient } from '../shared/api/queryClient'
+import { useCartStore } from './cartStore'
 
 interface AuthState {
   usuario: Usuario | null
@@ -36,6 +37,10 @@ export const useAuthStore = create<AuthState>()(
           // aunque el backend no responda, la sesión local se cierra igual
         } finally {
           get().limpiarSesion()
+          // Solo al cerrar sesión a propósito se vacía el carrito (así en una PC compartida no pasa al
+          // siguiente usuario). Si la sesión vence, ante un 401 o al recargar, el carrito se conserva:
+          // eso pasa por limpiarSesion(), no por logout().
+          useCartStore.getState().vaciar()
         }
       },
 
