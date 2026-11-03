@@ -43,7 +43,7 @@ IMAGENES: dict[str, str] = {
 PRODUCTOS: list[tuple[str, str, str, float, int]] = [
     ("Hamburguesas", "Hamburguesa clásica", "Carne, lechuga, tomate y cheddar", 8500.0, 25),
     ("Hamburguesas", "Hamburguesa doble", "Doble carne, panceta y cheddar", 11200.0, 20),
-    ("Hamburguesas", "Hamburguesa vegetariana", "Medallón de lentejas y vegetales", 9000.0, 15),
+    ("Hamburguesas", "Hamburguesa vegetariana", "Medallón vegetal con vegetales frescos", 9000.0, 15),
     ("Pizzas", "Pizza muzzarella", "Salsa de tomate y muzzarella", 9800.0, 30),
     ("Pizzas", "Pizza napolitana", "Muzzarella, tomate fresco y ajo", 10800.0, 18),
     ("Bebidas", "Gaseosa cola 500 ml", "Botella individual", 2200.0, 60),
@@ -53,13 +53,20 @@ PRODUCTOS: list[tuple[str, str, str, float, int]] = [
 ]
 
 
+# Descripciones que el seed usaba antes. Si un producto todavía tiene EXACTAMENTE esa descripción se
+# reemplaza por la nueva; si el admin la editó, se respeta.
+DESCRIPCIONES_ANTERIORES: dict[str, str] = {
+    "Hamburguesa vegetariana": "Medallón de lentejas y vegetales",
+}
+
+
 class SeedUnitOfWork(UnitOfWork):
     """El commit lo hace __exit__; el seed solo agrega entidades a la sesión."""
 
 
 def run() -> None:
     create_all_tables()
-    creados = {"usuarios": 0, "categorias": 0, "productos": 0, "imagenes_actualizadas": 0}
+    creados = {"usuarios": 0, "categorias": 0, "productos": 0, "imagenes_actualizadas": 0, "descripciones_actualizadas": 0}
     with SeedUnitOfWork() as uow:
         s = uow.session
         if s.exec(select(Usuario).where(Usuario.username == "admin")).first() is None:
@@ -98,11 +105,17 @@ def run() -> None:
                     )
                 )
                 creados["productos"] += 1
-            elif producto.imagen_url != IMAGENES[nombre]:
-                # Solo se corrige la foto: stock, precio y demás campos (que el admin pudo editar) no se tocan
-                producto.imagen_url = IMAGENES[nombre]
-                s.add(producto)
-                creados["imagenes_actualizadas"] += 1
+            else:
+                # Solo se corrigen la foto y, si sigue siendo la anterior del seed, la descripción.
+                # Stock, precio y demás campos (que el admin pudo editar) no se tocan.
+                if producto.imagen_url != IMAGENES[nombre]:
+                    producto.imagen_url = IMAGENES[nombre]
+                    s.add(producto)
+                    creados["imagenes_actualizadas"] += 1
+                if DESCRIPCIONES_ANTERIORES.get(nombre) == producto.descripcion:
+                    producto.descripcion = descripcion
+                    s.add(producto)
+                    creados["descripciones_actualizadas"] += 1
     print(f"Seed OK. Creados ahora: {creados}")
 
 
