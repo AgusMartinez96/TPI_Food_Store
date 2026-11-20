@@ -106,6 +106,8 @@ Usuario admin del seed: `admin` / `Admin1234!`.
 - [x] Fase 7: integración y calidad; verificado también sobre PostgreSQL 17 (seed x2 y 4 scripts); carrito se vacía solo al cerrar sesión
 - [x] Fase 8: entrega (README, guion, copia limpia probada, zip en entrega/). **Pendiente del responsable**: video, URL del repo y push
 
+- [x] Ajuste de usabilidad del catálogo (2026-11-20): la búsqueda filtra con cada letra (sin debounce, `placeholderData: keepPreviousData` evita parpadeo/skeleton) y vuelve a la página 1 al cambiar texto o categoría; página de 6 productos (`LIMITE = 6` en `CatalogoPage.tsx`, paginación en servidor con `skip = página × limit`). Verificado en navegador con los 9 productos del seed (2 páginas) y `pnpm build` sin errores.
+
 Detalle de tareas y trazabilidad con la rúbrica: [docs/PLAN_IMPLEMENTACION.md](docs/PLAN_IMPLEMENTACION.md).
 
 ## Cómo retomar en otra sesión

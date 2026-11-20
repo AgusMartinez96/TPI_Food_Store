@@ -10,12 +10,12 @@ import { Input, Select } from '../../../shared/ui/Input'
 import { ProductoCard } from '../components/ProductoCard'
 import { useProductos } from '../hooks/useProductos'
 
-const LIMITE = 12
+const LIMITE = 6
 
 export function CatalogoPage() {
   const [pagina, setPagina] = useState(0)
-  const [entrada, setEntrada] = useState('') // lo que se está escribiendo
-  const [search, setSearch] = useState('') // la búsqueda aplicada
+  const [entrada, setEntrada] = useState('') // el texto del buscador
+  const search = entrada.trim() // filtra con cada letra, sin retardo
   const [categoriaId, setCategoriaId] = useState<number | undefined>(undefined)
 
   const { data: categorias } = useCategorias()
@@ -27,14 +27,11 @@ export function CatalogoPage() {
   })
 
   function buscar(e: FormEvent) {
-    e.preventDefault()
-    setSearch(entrada.trim())
-    setPagina(0)
+    e.preventDefault() // Enter no recarga la página; la búsqueda ya se aplicó al escribir
   }
 
   function limpiar() {
     setEntrada('')
-    setSearch('')
     setCategoriaId(undefined)
     setPagina(0)
   }
@@ -48,7 +45,15 @@ export function CatalogoPage() {
       <p className="mt-1 text-sm text-stone-600">Elegí lo que quieras y armá tu pedido.</p>
 
       <form onSubmit={buscar} className="mt-4 grid gap-x-3 sm:grid-cols-[1fr_14rem_auto] sm:items-start">
-        <Input label="Buscar por nombre" placeholder="Ej: hamburguesa" value={entrada} onChange={(e) => setEntrada(e.target.value)} />
+        <Input
+          label="Buscar por nombre"
+          placeholder="Ej: hamburguesa"
+          value={entrada}
+          onChange={(e) => {
+            setEntrada(e.target.value)
+            setPagina(0)
+          }}
+        />
         <Select
           label="Categoría"
           value={categoriaId ?? ''}
