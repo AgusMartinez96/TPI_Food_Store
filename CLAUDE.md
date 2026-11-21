@@ -110,6 +110,8 @@ Usuario admin del seed: `admin` / `Admin1234!`.
 
 - [x] Foto del agua (2026-11-20): "Agua mineral 500 ml" usa `frontend/public/imagenes/agua-mineral-500ml.jpg` (marca Crystal, uso ilustrativo, sin licencia libre; crédito en el README), con `imagen_url = http://localhost:5173/imagenes/agua-mineral-500ml.jpg` (el formulario del panel exige URL absoluta). El seed solo la reemplaza si el producto todavía tiene la URL anterior (`IMAGENES_ANTERIORES`). `ProductoCard` encuadra esa foto vertical con `objectPosition: 50% 37%` (las demás siguen centradas).
 
+- [x] Auditoría independiente y ajuste del seed (2026-11-20): auditoría contra la consigna con copia limpia (README tal cual), 155 chequeos de API en PASS y `pnpm build` sin errores; sin fallas que resten puntos. Se corrigió solo P2: el seed completa `imagen_url` únicamente si está vacía o si todavía tiene la URL anterior del seed (`IMAGENES_ANTERIORES`); no pisa lo editado desde el panel. Verificado con SQLite temporal (`.verify/verificar_seed_imagenes.py`). Quedan como están, por decisión: P1 (concurrencia sin bloqueo de filas, TRD L1), P3 (foto del agua), P4 (casos grises de capas), P5 (Mis pedidos con `limit=100`), P6 (informativos).
+
 Detalle de tareas y trazabilidad con la rúbrica: [docs/PLAN_IMPLEMENTACION.md](docs/PLAN_IMPLEMENTACION.md).
 
 ## Cómo retomar en otra sesión

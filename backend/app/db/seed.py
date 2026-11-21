@@ -111,14 +111,10 @@ def run() -> None:
                 )
                 creados["productos"] += 1
             else:
-                # Se corrigen la foto (la del agua solo si sigue siendo la anterior) y, si sigue siendo la anterior del seed, la descripción.
+                # La foto se completa solo si está vacía o si todavía tiene la URL anterior del seed; si el admin
+                # la cambió desde el panel, se respeta. Lo mismo con la descripción.
                 # Stock, precio y demás campos (que el admin pudo editar) no se tocan.
-                if nombre in IMAGENES_ANTERIORES:
-                    if producto.imagen_url == IMAGENES_ANTERIORES[nombre]:
-                        producto.imagen_url = IMAGENES[nombre]
-                        s.add(producto)
-                        creados["imagenes_actualizadas"] += 1
-                elif producto.imagen_url != IMAGENES[nombre]:
+                if not producto.imagen_url or producto.imagen_url == IMAGENES_ANTERIORES.get(nombre):
                     producto.imagen_url = IMAGENES[nombre]
                     s.add(producto)
                     creados["imagenes_actualizadas"] += 1

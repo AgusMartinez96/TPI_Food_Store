@@ -48,7 +48,7 @@ uvicorn app.main:app --reload
 
 La documentación interactiva de la API queda en **http://localhost:8000/docs** (y `/redoc`).
 
-> `python -m app.db.seed` crea las tablas por sí mismo, así que puede correr **antes** de levantar `uvicorn`. Es idempotente: repetirlo no duplica nada y solo corrige las fotos (y la descripción de la hamburguesa vegetariana, si no la editaste) de los productos que ya existen.
+> `python -m app.db.seed` crea las tablas por sí mismo, así que puede correr **antes** de levantar `uvicorn`. Es idempotente: repetirlo no duplica nada y solo completa la foto de un producto que ya existe si está vacía o si todavía tiene la URL anterior del seed (y la descripción de la hamburguesa vegetariana, si no la editaste). Lo que cambies desde el panel no se pisa.
 
 **Base de datos.** Por defecto `.env.example` usa SQLite (`sqlite:///./foodstore.db`), que anda sin instalar nada. Para usar **PostgreSQL**:
 
