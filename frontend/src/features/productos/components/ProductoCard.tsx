@@ -25,6 +25,8 @@ export function ProductoCard({ producto }: { producto: Producto }) {
           loading="lazy"
           onError={() => setImagenRota(true)}
           className="h-36 w-full rounded-lg object-cover"
+          // foto vertical del agua: se encuadra sobre la etiqueta (las demás tarjetas siguen centradas)
+          style={producto.imagen_url.includes('/imagenes/agua-mineral-500ml.jpg') ? { objectPosition: '50% 37%' } : undefined}
         />
       ) : (
         <div

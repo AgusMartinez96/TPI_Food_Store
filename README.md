@@ -138,9 +138,10 @@ Las fotos de los productos del seed son miniaturas de [Wikimedia Commons](https:
 | Pizza muzzarella | [Pizza with mozzarella (argentine style).jpg](https://commons.wikimedia.org/wiki/File:Pizza_with_mozzarella_(argentine_style).jpg) | Victor Manuel Giordano | CC BY-SA 4.0 |
 | Pizza napolitana | [Pizza-napoletana.jpg](https://commons.wikimedia.org/wiki/File:Pizza-napoletana.jpg) | Fabryx98 | CC BY-SA 4.0 |
 | Gaseosa cola 500 ml | [Coca-Cola glass bottle (Germany)](https://commons.wikimedia.org/wiki/File:15-09-26-RalfR-WLC-0098_-_Coca-Cola_glass_bottle_(Germany).jpg) | Ralf Roletschek | Dominio público |
-| Agua mineral 500 ml | [Bottle of Water.jpg](https://commons.wikimedia.org/wiki/File:Bottle_of_Water.jpg) | Jiafei Slay Queen | CC0 |
 | Flan casero | [Flan con dulce de leche y crema.jpg](https://commons.wikimedia.org/wiki/File:Flan_con_dulce_de_leche_y_crema.jpg) | Pequeño mar | CC BY-SA 4.0 |
 | Brownie con helado | [Chocolate brownies with vanilla ice cream (43710445200).jpg](https://commons.wikimedia.org/wiki/File:Chocolate_brownies_with_vanilla_ice_cream_(43710445200).jpg) | Ruth Hartnup | CC BY 2.0 |
+
+La foto de "Agua mineral 500 ml" (`frontend/public/imagenes/agua-mineral-500ml.jpg`) es una foto de producto de la marca Crystal, usada con fines ilustrativos en este trabajo académico. **No tiene licencia libre**: la marca y la imagen pertenecen a sus titulares.
 
 ## Notas
 

@@ -31,8 +31,8 @@ IMAGENES: dict[str, str] = {
     "Pizza napolitana": f"{_COMMONS}/4/46/Pizza-napoletana.jpg/500px-Pizza-napoletana.jpg",
     # Dominio público · Ralf Roletschek
     "Gaseosa cola 500 ml": f"{_COMMONS}/e/e8/15-09-26-RalfR-WLC-0098_-_Coca-Cola_glass_bottle_%28Germany%29.jpg/500px-15-09-26-RalfR-WLC-0098_-_Coca-Cola_glass_bottle_%28Germany%29.jpg",
-    # CC0 · Jiafei Slay Queen
-    "Agua mineral 500 ml": f"{_COMMONS}/a/ad/Bottle_of_Water.jpg/500px-Bottle_of_Water.jpg",
+    # Foto de producto (marca Crystal), servida por el frontend; uso ilustrativo, sin licencia libre (ver README)
+    "Agua mineral 500 ml": "http://localhost:5173/imagenes/agua-mineral-500ml.jpg",
     # CC BY-SA 4.0 · Pequeño mar
     "Flan casero": f"{_COMMONS}/5/5e/Flan_con_dulce_de_leche_y_crema.jpg/500px-Flan_con_dulce_de_leche_y_crema.jpg",
     # CC BY 2.0 · Ruth Hartnup
@@ -52,6 +52,11 @@ PRODUCTOS: list[tuple[str, str, str, float, int]] = [
     ("Postres", "Brownie con helado", "Brownie tibio y bocha de crema", 5600.0, 10),
 ]
 
+
+# URL anterior del seed: la foto del agua se reemplaza solo si el producto todavía la tiene (no pisa cambios del panel)
+IMAGENES_ANTERIORES: dict[str, str] = {
+    "Agua mineral 500 ml": f"{_COMMONS}/a/ad/Bottle_of_Water.jpg/500px-Bottle_of_Water.jpg",
+}
 
 # Descripciones que el seed usaba antes. Si un producto todavía tiene EXACTAMENTE esa descripción se
 # reemplaza por la nueva; si el admin la editó, se respeta.
@@ -106,9 +111,14 @@ def run() -> None:
                 )
                 creados["productos"] += 1
             else:
-                # Solo se corrigen la foto y, si sigue siendo la anterior del seed, la descripción.
+                # Se corrigen la foto (la del agua solo si sigue siendo la anterior) y, si sigue siendo la anterior del seed, la descripción.
                 # Stock, precio y demás campos (que el admin pudo editar) no se tocan.
-                if producto.imagen_url != IMAGENES[nombre]:
+                if nombre in IMAGENES_ANTERIORES:
+                    if producto.imagen_url == IMAGENES_ANTERIORES[nombre]:
+                        producto.imagen_url = IMAGENES[nombre]
+                        s.add(producto)
+                        creados["imagenes_actualizadas"] += 1
+                elif producto.imagen_url != IMAGENES[nombre]:
                     producto.imagen_url = IMAGENES[nombre]
                     s.add(producto)
                     creados["imagenes_actualizadas"] += 1
