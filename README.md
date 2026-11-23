@@ -5,8 +5,8 @@ Aplicación web de pedidos de comida: backend **FastAPI + SQLModel** y frontend 
 
 | | |
 |---|---|
-| **Repositorio** | `https://github.com/AgusMartinez96/TPI_Food_Store` |
-| **Video de demostración** | `https://youtu.be/XySrapzEpF4` |
+| **Repositorio** | [github.com/AgusMartinez96/TPI_Food_Store](https://github.com/AgusMartinez96/TPI_Food_Store) |
+| **Video de demostración** | [youtu.be/XySrapzEpF4](https://youtu.be/XySrapzEpF4) |
 | **Autor** | Agustín Martínez |
 
 ## Qué hace
